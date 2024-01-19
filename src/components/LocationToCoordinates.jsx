@@ -9,6 +9,7 @@ const LocationToCoordinates = async (locationString) => {
       }`
     );
     const locationData = await response.json();
+    console.log(locationData);
     if (locationData.length === 0) {
       throw new Error("No location by that name. Try again.");
     }

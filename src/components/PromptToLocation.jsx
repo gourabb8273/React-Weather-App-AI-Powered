@@ -4,7 +4,7 @@ const PromptToLocation = (prompt) => {
   const url = "https://api.openai.com/v1/chat/completions";
 
   const data = {
-    model: "gpt-3.5-turbo-0613",
+    model: "gpt-3.5-turbo-16k-0613",
     messages: [{ role: "user", content: prompt }],
     functions: [
       {
@@ -60,14 +60,12 @@ const PromptToLocation = (prompt) => {
     body: JSON.stringify(data),
     method: "POST",
   };
-
   return fetch(url, params)
     .then((response) => response.json())
     .then((data) => {
       const promptRes = JSON.parse(
         data.choices[0].message.function_call.arguments
-      );
-      console.log(promptRes);
+      );     
 
       const locationString = () => {
         if (promptRes.countryCode === "US") {
@@ -81,8 +79,8 @@ const PromptToLocation = (prompt) => {
         locationString: locationString(),
         units: promptRes.unit,
         country: promptRes.country,
-        USstate: promptRes.USstate
-      }
+        USstate: promptRes.USstate,
+      };
 
       return promptData;
     })

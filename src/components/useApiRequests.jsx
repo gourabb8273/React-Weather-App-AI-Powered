@@ -19,22 +19,27 @@ const useApiRequests = (prompt) => {
 
       try {
         const promptDataRes = await PromptToLocation(prompt);
+        console.log("promptDataRes", promptDataRes);
         setPromptData(promptDataRes);
 
         const locationDataRes = await LocationToCoordinates(
           promptDataRes.locationString
         );
+        console.log("locationDataRes", locationDataRes);
         setLocationData(locationDataRes);
 
         const weatherDataRes = await WeatherData(locationDataRes);
         setWeatherData(weatherDataRes);
+        console.log("weatherDataRes", weatherDataRes);
 
         const weatherDescriptRes = await WeatherDescript(
           prompt,
           weatherDataRes
         );
+        console.log("weatherDescriptRes", weatherDescriptRes);
         setWeatherDescription(weatherDescriptRes);
       } catch (error) {
+        console.log(error);
         setError(error);
         console.error("Error:", error);
       }

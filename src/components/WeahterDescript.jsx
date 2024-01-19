@@ -15,7 +15,7 @@ const WeatherDescript = (prompt, weatherData) => {
   )}`;
 
   const data = {
-    model: "gpt-4-0613",
+    model: "gpt-3.5-turbo-16k-0613",
     messages: [
       { role: "system", content: sysMsg },
       { role: "user", content: newPrompt },
@@ -34,13 +34,16 @@ const WeatherDescript = (prompt, weatherData) => {
   return fetch(url, params)
     .then((response) => response.json())
     .then((data) => {
-      return data.choices[0].message.content
+      return (
+        data &&
+        data.choices &&
+        data.choices.length &&
+        data.choices[0].message.content
+      );
     })
     .catch((error) => {
       console.log("Error:", error);
-      return Promise.reject(
-        "Unable to fetch weather description."
-      );
+      return Promise.reject("Unable to fetch weather description.");
     });
 };
 
